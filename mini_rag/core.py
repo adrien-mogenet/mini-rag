@@ -32,8 +32,20 @@ class RagifiedData:
 
 def _split_text_into_chunks(text: str, chunk_size: int = 500, overlap: int = 50) -> List[str]:
     """Split text into overlapping chunks."""
+    # Handle empty or whitespace-only text
+    if not text.strip():
+        return [text]
+
+    # Validate parameters
+    if overlap >= chunk_size:
+        overlap = max(0, chunk_size - 1)  # Ensure overlap is less than chunk_size
+
     words = text.split()
     chunks = []
+
+    # Handle case where text has fewer words than chunk_size
+    if len(words) <= chunk_size:
+        return [text]
 
     for i in range(0, len(words), chunk_size - overlap):
         chunk_words = words[i:i + chunk_size]
@@ -148,8 +160,10 @@ def search_similar(
     # Compute similarities
     similarities = cosine_similarity(query_embedding, rag_data.embeddings)[0]
 
-    # Get top-k indices
-    top_indices = np.argsort(similarities)[::-1][:top_k]
+    # Get top-k indices (limit to available chunks)
+    num_chunks = len(rag_data.chunks)
+    actual_top_k = min(top_k, num_chunks)
+    top_indices = np.argsort(similarities)[::-1][:actual_top_k]
 
     # Return results as (chunk, score) tuples
     results = [
