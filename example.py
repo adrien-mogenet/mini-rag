@@ -12,7 +12,7 @@ from mini_rag import ragify, search_similar
 from mini_rag.core import RagifiedData
 
 def main():
-    print("🚀 Mini-RAG Example Script")
+    print("Mini-RAG Example Script")
     print("=" * 50)
 
     # Sample text content (simulating a large knowledge base)
@@ -36,9 +36,9 @@ def main():
     # Ragify the sample text
     rag_data = ragify(sample_text, is_file_path=False, chunk_size=100, overlap=20)
 
-    print(f"✅ Successfully ragified text into {rag_data.metadata['num_chunks']} chunks")
-    print(f"📊 Embedding dimensions: {rag_data.metadata['embedding_dim']}")
-    print(f"🤖 Model used: {rag_data.metadata['model_name']}")
+    print(f"Successfully ragified text into {rag_data.metadata['num_chunks']} chunks")
+    print(f"Embedding dimensions: {rag_data.metadata['embedding_dim']}")
+    print(f"Model used: {rag_data.metadata['model_name']}")
 
     print("\n2. Sample chunks:")
     print("-" * 30)
@@ -56,7 +56,7 @@ def main():
     ]
 
     for query in queries:
-        print(f"\n🔍 Query: '{query}'")
+        print(f"\nQuery: '{query}'")
         results = search_similar(rag_data, query, top_k=2)
 
         for i, (chunk, score) in enumerate(results, 1):
@@ -69,18 +69,18 @@ def main():
     # Save ragified data to disk
     save_path = "example_rag_data.pkl"
     rag_data.save(save_path)
-    print(f"✅ Saved ragified data to {save_path}")
+    print(f"Saved ragified data to {save_path}")
 
     print("\n5. Loading ragified data...")
     print("-" * 30)
 
     # Load ragified data from disk
     loaded_rag_data = RagifiedData.load(save_path)
-    print(f"✅ Loaded ragified data with {len(loaded_rag_data.chunks)} chunks")
+    print(f"Loaded ragified data with {len(loaded_rag_data.chunks)} chunks")
 
     # Test search with loaded data
     test_query = "artificial intelligence algorithms"
-    print(f"\n🔍 Testing loaded data with query: '{test_query}'")
+    print(f"\nTesting loaded data with query: '{test_query}'")
     results = search_similar(loaded_rag_data, test_query, top_k=1)
 
     for chunk, score in results:
@@ -99,8 +99,8 @@ def main():
         best_score = results[0][1] if results else 0
         print(f"  Chunk size {chunk_size:3d}: {rag_data_test.metadata['num_chunks']:2d} chunks, best score: {best_score:.3f}")
 
-    print("\n✨ Mini-RAG example completed successfully!")
-    print(f"💡 Tip: You can now use the saved file '{save_path}' in your own applications!")
+    print("\nMini-RAG example completed successfully!")
+    print(f"Tip: You can now use the saved file '{save_path}' in your own applications!")
 
 if __name__ == "__main__":
     main()

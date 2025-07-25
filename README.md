@@ -1,14 +1,19 @@
 # Mini-RAG
 
-A lightweight Python library for efficient knowledge base management in AI applications. Mini-RAG helps developers avoid passing large content directly to LLM prompts by providing efficient document embedding and similarity search capabilities.
+A lightweight Python library for efficient knowledge base management in AI applications. Mini-RAG helps developers avoid passing large content directly to LLM prompts by providing efficient document embedding and similarity search capabilities, all this without operating any vector database! A local RAG system cna help you reduce the size of the prompt significantly, and thus:
+
+- Reduce the latency, as smaller prompts are faster to process
+- Reduce costs, as you need to send fewer tokens to the LLM
+- Improve the general performances of your AI application, as larger prompts are more likely to generate hallucinations.
+
 
 ## Features
 
-- 🚀 **Simple API**: Just two main functions - `ragify()` and `search_similar()`
-- 📄 **Flexible Input**: Support for files, text strings, or pre-chunked content
-- 🔍 **Efficient Search**: Fast similarity search using sentence transformers
-- 💾 **Persistent Storage**: Save and load ragified data to disk
-- ⚙️ **Configurable**: Customizable chunk sizes, overlap, and embedding models
+- **Simple API**: Just two main functions - `ragify()` and `search_similar()`
+- **Flexible Input**: Support for files, text strings, or pre-chunked content
+- **Efficient Search**: Fast similarity search using sentence transformers
+- **Persistent Storage**: Save and load ragified data to disk
+- **Configurable**: Customizable chunk sizes, overlap, and embedding models
 
 ## Installation
 
@@ -40,8 +45,7 @@ results = search_similar(rag_data, "your search query", top_k=5)
 # Display results
 for chunk, score in results:
     print(f"Score: {score:.3f}")
-    print(f"Content: {chunk[:200]}...")
-    print("-" * 50)
+    print(f"Content: {chunk}")
 ```
 
 ### Working with Text Content
